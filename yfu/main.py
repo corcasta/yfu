@@ -2,14 +2,13 @@ import os
 import openai
 from pynput import keyboard
 import speech_recognition as sr
-from elevenlabs import generate, play, set_api_key, voices
+from elevenlabs import set_api_key
+from settings import OPENAI_API_KEY, ELEVENLABS_API_KEY
+from assistant import Impersonator, Conversation
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
+"""
 KEYWORD = "hey"
 chat_history = [] # Empty history at the beginning
-
-
 
 def personal_assistant(key):
     #print("Tecla: ", str(key,char) == "z")
@@ -35,7 +34,6 @@ def personal_assistant(key):
             response = openai.ChatCompletion.create(model="gpt-3.5-turbo",
                                                     temperature=0.5,
                                                     messages=[
-,
                                                         {
                                                             "role": "user", 
                                                             "content": petition
@@ -50,14 +48,22 @@ def personal_assistant(key):
             
             print(response_text)
             play(audio_audio)
+"""
+
+
+        
+        
 
 
 def main():    
     openai.api_key = OPENAI_API_KEY
     set_api_key(ELEVENLABS_API_KEY)
     
+    marin = Impersonator(profile='yandere')
+    conversation = Conversation(marin)
+    
     while True:
-        with keyboard.Listener(on_press=personal_assistant) as listener:
+        with keyboard.Listener(on_press=conversation.start) as listener:
             listener.join()
             
             
