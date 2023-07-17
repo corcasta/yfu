@@ -5,6 +5,39 @@ from elevenlabs import generate, stream
 from settings import ROOT_DIR
 from faster_whisper import WhisperModel
 
+import os
+import shutil
+import subprocess
+from pathlib import Path
+
+def is_installed(lib_name: str) -> bool:
+    lib = shutil.which(lib_name)
+    if lib is None:
+        return False
+    global_path = Path(lib)
+    # else check if path is valid and has the correct access rights
+    return global_path.exists() and os.access(global_path, os.X_OK)
+
+    
+def play(audio: bytes, notebook: bool = False) -> None:
+    if notebook:
+        from IPython.display import Audio, display
+
+        display(Audio(audio, rate=44100, autoplay=True))
+    else:
+        if not is_installed("ffplay"):
+            raise ValueError("ffplay from ffmpeg not found, necessary to play audio.")
+        args = ["ffplay", "-autoexit", "-", "-nodisp"]
+        proc = subprocess.Popen(
+            args=args,
+            stdout=subprocess.PIPE,
+            stdin=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+        out, err = proc.communicate(input=audio)
+        proc.poll()
+
+
 class Impersonator():
     def __init__(
         self, 

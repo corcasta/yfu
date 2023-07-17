@@ -8,3 +8,4 @@ ROOT_DIR = str(Path(os.path.dirname(os.path.abspath(__file__))).parent)
 # List of required API keys 
 OPENAI_API_KEY = config('OPENAI_API_KEY')
 ELEVENLABS_API_KEY = config('ELEVENLABS_API_KEY')
+GOOGLE_APPLICATION_CREDENTIALS = config('GOOGLE_APPLICATION_CREDENTIALS')
