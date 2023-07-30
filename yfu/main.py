@@ -1,7 +1,5 @@
-import os
 import openai
 from pynput import keyboard
-import speech_recognition as sr
 from elevenlabs import set_api_key
 from settings import OPENAI_API_KEY, ELEVENLABS_API_KEY
 from assistant import Impersonator, Conversation
